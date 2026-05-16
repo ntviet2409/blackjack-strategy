@@ -61,7 +61,7 @@ nav { position:sticky; top:0; z-index:100; background:var(--bg-nav); border-bott
 
 /* ── Layout ── */
 main { max-width:1100px; margin:0 auto; padding:20px 16px 60px; }
-.section { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; margin-bottom:24px; box-shadow:var(--shadow); }
+.section { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; margin-bottom:24px; box-shadow:var(--shadow); scroll-margin-top:68px; }
 .section-title { font-size:1.3rem; font-weight:700; color:var(--primary); margin-bottom:4px; }
 .section-subtitle { font-size:.9rem; color:var(--text-secondary); margin-bottom:20px; }
 .sub-heading { color:var(--primary); margin:16px 0 8px; font-size:1.05rem; }
@@ -297,14 +297,46 @@ main { max-width:1100px; margin:0 auto; padding:20px 16px 60px; }
 
 /* ── Responsive ── */
 @media(max-width:600px) {
+  main { padding:14px 10px 60px; }
+  .section { padding:16px 14px; margin-bottom:14px; border-radius:10px; }
+  .section-title { font-size:1.15rem; }
+  .section-subtitle { font-size:.85rem; margin-bottom:14px; }
+  .sub-heading { font-size:.98rem; margin:14px 0 6px; }
+  .body-text { font-size:.88rem; }
+  .tip-box { padding:12px 14px; }
+  .tip-title { font-size:.88rem; }
+  .tip-box p { font-size:.86rem; }
+  .info-grid { grid-template-columns:1fr; }
+  .key-rule { padding:10px 12px; gap:8px; }
+  .key-rule .rule-text { font-size:.85rem; }
+  .rules-table { font-size:.82rem; }
+  .rules-table th, .rules-table td { padding:6px 8px; }
   .card { width:58px; height:82px; }
   .card-center { font-size:1.3rem; }
   .card-corner .card-val { font-size:.7rem; }
   .card-corner .card-suit { font-size:.6rem; }
   .action-btn { padding:8px 14px; font-size:.85rem; }
-  .strategy-table { font-size:.72rem; }
+  .strategy-table { font-size:.72rem; min-width:420px; }
   .strategy-table th, .strategy-table td { padding:4px 3px; }
-  .play-controls-bar { gap:10px; }
+  .strategy-table .row-label { min-width:34px; }
+  .chart-container { -webkit-overflow-scrolling:touch; }
+  .felt { padding:20px 14px; }
+  .play-controls-bar { gap:10px; padding:10px 12px; }
   .play-toggle { margin-left:0; }
+  .play-bank { font-size:.98rem; }
   .roadmap-step { padding:10px 12px; }
+  .step-num { width:32px; height:32px; font-size:.95rem; }
+  .step-info strong { font-size:.9rem; }
+  .step-info span { font-size:.78rem; }
+  .tab-btn { padding:8px 12px; font-size:.85rem; }
+  .quiz-cards-display { gap:14px; }
+  .qc-label { min-width:38px; font-size:.74rem; }
+  .review-q { min-width:140px; }
+  .action-cell { cursor:pointer; }
+  .chart-tooltip { max-width:calc(100vw - 24px); font-size:.78rem; }
+}
+@media(max-width:380px) {
+  .section { padding:14px 12px; }
+  .strategy-table { min-width:380px; font-size:.7rem; }
+  .strategy-table th, .strategy-table td { padding:3px 2px; }
 }

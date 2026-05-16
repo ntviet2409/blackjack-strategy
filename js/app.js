@@ -80,46 +80,93 @@ function ensureChartTooltip() {
   document.body.appendChild(chartTooltipEl);
   return chartTooltipEl;
 }
-function positionChartTooltip(e) {
+function positionChartTooltipAt(x, y) {
   const tip = chartTooltipEl;
   if (!tip) return;
   const pad = 14;
   const w = tip.offsetWidth;
   const h = tip.offsetHeight;
-  let x = e.clientX + pad;
-  let y = e.clientY + pad;
-  if (x + w > window.innerWidth - 8) x = e.clientX - w - pad;
-  if (y + h > window.innerHeight - 8) y = e.clientY - h - pad;
+  let nx = x + pad;
+  let ny = y + pad;
+  if (nx + w > window.innerWidth - 8) nx = x - w - pad;
+  if (nx < 8) nx = 8;
+  if (ny + h > window.innerHeight - 8) ny = y - h - pad;
+  if (ny < 8) ny = 8;
+  tip.style.left = nx + 'px';
+  tip.style.top = ny + 'px';
+}
+function positionChartTooltipForCell(cell) {
+  const r = cell.getBoundingClientRect();
+  const tip = chartTooltipEl;
+  if (!tip) return;
+  const w = tip.offsetWidth;
+  const h = tip.offsetHeight;
+  const margin = 8;
+  let x = r.left + (r.width / 2) - (w / 2);
+  let y = r.top - h - margin;
+  if (y < margin) y = r.bottom + margin;
+  if (x < margin) x = margin;
+  if (x + w > window.innerWidth - margin) x = window.innerWidth - w - margin;
   tip.style.left = x + 'px';
   tip.style.top = y + 'px';
 }
+function showChartTooltipFor(cell) {
+  const action = cell.dataset.action;
+  const info = ACTION_INFO[action];
+  if (!info) return null;
+  const tip = ensureChartTooltip();
+  tip.innerHTML =
+    '<div class="tt-context">Your <strong>' + cell.dataset.hand +
+    '</strong> vs Dealer <strong>' + cell.dataset.dealer + '</strong></div>' +
+    '<div class="tt-action action-' + action + '">' + action + ' — ' + info.label + '</div>' +
+    '<div class="tt-desc">' + info.desc + '</div>';
+  tip.classList.add('visible');
+  return tip;
+}
+function hideChartTooltip() {
+  if (chartTooltipEl) {
+    chartTooltipEl.classList.remove('visible');
+    chartTooltipEl.dataset.sticky = '';
+  }
+}
 function initChartTooltips() {
+  // Mouse / hover (desktop)
   document.addEventListener('mouseover', (e) => {
     const cell = e.target.closest('.action-cell');
     if (!cell) return;
-    const action = cell.dataset.action;
-    const info = ACTION_INFO[action];
-    if (!info) return;
-    const tip = ensureChartTooltip();
-    tip.innerHTML =
-      '<div class="tt-context">Your <strong>' + cell.dataset.hand +
-      '</strong> vs Dealer <strong>' + cell.dataset.dealer + '</strong></div>' +
-      '<div class="tt-action action-' + action + '">' + action + ' — ' + info.label + '</div>' +
-      '<div class="tt-desc">' + info.desc + '</div>';
-    tip.classList.add('visible');
-    positionChartTooltip(e);
+    if (chartTooltipEl && chartTooltipEl.dataset.sticky === '1') return; // tap-locked
+    if (!showChartTooltipFor(cell)) return;
+    positionChartTooltipAt(e.clientX, e.clientY);
   });
   document.addEventListener('mousemove', (e) => {
-    if (chartTooltipEl && chartTooltipEl.classList.contains('visible') && e.target.closest('.action-cell')) {
-      positionChartTooltip(e);
-    }
+    if (!chartTooltipEl || !chartTooltipEl.classList.contains('visible')) return;
+    if (chartTooltipEl.dataset.sticky === '1') return;
+    if (e.target.closest('.action-cell')) positionChartTooltipAt(e.clientX, e.clientY);
   });
   document.addEventListener('mouseout', (e) => {
+    if (!chartTooltipEl || chartTooltipEl.dataset.sticky === '1') return;
     const cell = e.target.closest('.action-cell');
-    if (cell && !cell.contains(e.relatedTarget) && chartTooltipEl) {
-      chartTooltipEl.classList.remove('visible');
+    if (cell && !cell.contains(e.relatedTarget)) hideChartTooltip();
+  });
+
+  // Tap (touch / mobile) — pointerup with non-mouse, OR fallback click on touch devices
+  document.addEventListener('click', (e) => {
+    // Treat as tap only when there is no hovering pointer (touch / pen). On desktop, hover already handled it.
+    const isTouchLike = !window.matchMedia('(hover: hover)').matches;
+    if (!isTouchLike) return;
+    const cell = e.target.closest('.action-cell');
+    if (cell) {
+      showChartTooltipFor(cell);
+      positionChartTooltipForCell(cell);
+      chartTooltipEl.dataset.sticky = '1';
+    } else if (chartTooltipEl && chartTooltipEl.classList.contains('visible')) {
+      hideChartTooltip();
     }
   });
+  // Dismiss sticky tooltip on scroll
+  window.addEventListener('scroll', () => {
+    if (chartTooltipEl && chartTooltipEl.dataset.sticky === '1') hideChartTooltip();
+  }, { passive: true });
 }
 
 function renderAllCharts() {
