@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack Basic Strategy — Trainer for Beginners</title>
+<link rel="stylesheet" href="css/style.css?v=3">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Blackjack Strategy</div>
+  <div class="nav-links">
+    <a href="#learn" onclick="scrollToSection('learn')">Learn</a>
+    <a href="#charts" onclick="scrollToSection('charts')">Charts</a>
+    <a href="#practice" onclick="scrollToSection('practice')">Practice</a>
+    <a href="#quiz" onclick="scrollToSection('quiz')">Quiz</a>
+    <a href="#play" onclick="scrollToSection('play')">Play</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-sm" id="themeToggle" onclick="toggleTheme()">Dark</button>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#learn" onclick="scrollToSection('learn');toggleMobileMenu()">Learn</a>
+  <a href="#charts" onclick="scrollToSection('charts');toggleMobileMenu()">Charts</a>
+  <a href="#practice" onclick="scrollToSection('practice');toggleMobileMenu()">Practice</a>
+  <a href="#quiz" onclick="scrollToSection('quiz');toggleMobileMenu()">Quiz</a>
+  <a href="#play" onclick="scrollToSection('play');toggleMobileMenu()">Play</a>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  LEARNING ROADMAP                      -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section roadmap-section" id="roadmap">
+  <h2 class="section-title">Your Learning Path</h2>
+  <p class="section-subtitle">Follow these steps in order. Each builds on the last.</p>
+  <div class="roadmap">
+    <div class="roadmap-step" onclick="scrollToSection('learn')">
+      <div class="step-num">1</div>
+      <div class="step-info">
+        <strong>Learn the Rules</strong>
+        <span>Card values, actions, dealer rules, and the 3 key principles</span>
+      </div>
+    </div>
+    <div class="roadmap-step" onclick="scrollToSection('charts')">
+      <div class="step-num">2</div>
+      <div class="step-info">
+        <strong>Study the Charts</strong>
+        <span>Hard totals first, then soft totals, then pairs — one at a time</span>
+      </div>
+    </div>
+    <div class="roadmap-step" onclick="scrollToSection('practice')">
+      <div class="step-num">3</div>
+      <div class="step-info">
+        <strong>Drill Each Decision</strong>
+        <span>Practice hands one category at a time until it's automatic</span>
+      </div>
+    </div>
+    <div class="roadmap-step" onclick="scrollToSection('quiz')">
+      <div class="step-num">4</div>
+      <div class="step-info">
+        <strong>Test Yourself</strong>
+        <span>Quiz on the tricky scenarios that catch most beginners</span>
+      </div>
+    </div>
+    <div class="roadmap-step" onclick="scrollToSection('play')">
+      <div class="step-num">5</div>
+      <div class="step-info">
+        <strong>Play Real Hands</strong>
+        <span>Full game against the dealer with optional strategy hints</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  STEP 1: LEARN                         -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section" id="learn">
+  <h2 class="section-title">Step 1 — Learn the Rules</h2>
+  <p class="section-subtitle">Everything you need to know before sitting at a blackjack table.</p>
+
+  <h3 class="sub-heading">The Goal</h3>
+  <p class="body-text">Beat the dealer by getting a hand value closer to <strong>21</strong> without going over (busting). You are NOT trying to get 21 — you are trying to beat the <em>dealer</em>.</p>
+
+  <h3 class="sub-heading">Card Values</h3>
+  <table class="rules-table">
+    <thead><tr><th>Card</th><th>Value</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>2 – 10</td><td>Face value</td><td>7 of hearts = 7</td></tr>
+      <tr><td>Jack, Queen, King</td><td>10</td><td>Queen of spades = 10</td></tr>
+      <tr><td>Ace</td><td>11 or 1</td><td>A + 6 = 17 (soft) &nbsp;|&nbsp; A + 6 + 8 = 15 (hard, Ace = 1)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip-box">
+    <div class="tip-title">Hard vs Soft Hands — This Is Critical</div>
+    <p><strong>Soft hand:</strong> Contains an Ace counted as 11 (e.g., A-6 = soft 17). Safe to hit — the Ace drops to 1 if you'd bust.<br>
+    <strong>Hard hand:</strong> No Ace, or Ace already counts as 1 (e.g., 10-7 = hard 17, or 10-5-A = hard 16). Hitting risks busting.</p>
+    <p style="margin-top:6px;color:var(--text-secondary);font-size:.85rem;">Why does this matter? The strategy is completely different. Soft 17 = hit or double. Hard 17 = always stand. Same number, opposite action.</p>
+  </div>
+
+  <h3 class="sub-heading">Your 5 Options</h3>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>Hit (H)</h4>
+      <p>Take another card. You can keep hitting until you stand or bust (go over 21).</p>
+    </div>
+    <div class="info-card">
+      <h4>Stand (S)</h4>
+      <p>Keep your current hand. Your turn is over and the dealer plays.</p>
+    </div>
+    <div class="info-card">
+      <h4>Double Down (D)</h4>
+      <p>Double your bet, receive exactly ONE more card, then stand. Best when you have 10 or 11.</p>
+    </div>
+    <div class="info-card">
+      <h4>Split (P)</h4>
+      <p>Only when you have a pair (e.g., 8-8). Split into two separate hands, each with its own bet.</p>
+    </div>
+    <div class="info-card">
+      <h4>Surrender (R)</h4>
+      <p>Give up half your bet and fold immediately. Only on your first two cards. Not offered at all tables.</p>
+    </div>
+  </div>
+
+  <h3 class="sub-heading">Dealer Rules — No Choices, Just Rules</h3>
+  <p class="body-text">The dealer plays mechanically. This is what makes basic strategy work — you know exactly what the dealer will do.</p>
+  <div class="key-rules">
+    <div class="key-rule"><span class="rule-num">1</span><span class="rule-text">Dealer <strong>must hit</strong> on 16 or less — no exceptions</span></div>
+    <div class="key-rule"><span class="rule-num">2</span><span class="rule-text">Dealer <strong>must stand</strong> on 17 or more (most tables)</span></div>
+    <div class="key-rule"><span class="rule-num">3</span><span class="rule-text">Dealer's <strong>first card is face-up</strong> (the "upcard") — your entire strategy is based on this one card</span></div>
+    <div class="key-rule"><span class="rule-num">4</span><span class="rule-text">Dealer's <strong>second card is face-down</strong> (the "hole card") — revealed only after you finish</span></div>
+  </div>
+
+  <h3 class="sub-heading">The 3 Key Principles</h3>
+  <p class="body-text">Before memorizing charts, understand WHY basic strategy works:</p>
+  <div class="key-rules">
+    <div class="key-rule">
+      <span class="rule-num">1</span>
+      <span class="rule-text"><strong>Dealer 2–6 = Weak (likely to bust).</strong> The dealer must hit, and with a weak upcard, they often draw to over 21. Stand on your stiff hands (12–16) and let them bust. Don't risk busting yourself trying to improve.</span>
+    </div>
+    <div class="key-rule">
+      <span class="rule-num">2</span>
+      <span class="rule-text"><strong>Dealer 7–A = Strong.</strong> The dealer likely already has 17+. Your 14 or 15 won't win, so hit to improve — even though you might bust. Doing nothing loses more often.</span>
+    </div>
+    <div class="key-rule">
+      <span class="rule-num">3</span>
+      <span class="rule-text"><strong>Double when the math favors you.</strong> When you have 10 or 11 and the dealer is weak, your most likely next card is a 10-value (there are 16 of them in a deck). Double your bet — the odds are in your favor.</span>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top:20px;">
+    <div class="tip-title">What is "Basic Strategy"?</div>
+    <p>It's the mathematically optimal decision for every possible hand. Developed by running millions of computer simulations. Following it perfectly reduces the house edge to about <strong>0.5%</strong> — the best odds of any casino game. It doesn't guarantee you'll win every hand, but over thousands of hands, you'll lose the least amount possible.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  STEP 2: STRATEGY CHARTS               -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section" id="charts">
+  <h2 class="section-title">Step 2 — Strategy Charts</h2>
+  <p class="section-subtitle">The optimal play for every hand combination. Study one tab at a time — start with Hard Totals.</p>
+
+  <div class="tip-box" style="margin-bottom:16px;">
+    <div class="tip-title">How to Read the Chart</div>
+    <p><strong>Row</strong> = your hand total. <strong>Column</strong> = dealer's face-up card. Find your row, find the dealer's column, and the cell tells you what to do. Hover any cell for a description.</p>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="tab-bar" id="chartTabs">
+    <button class="tab-btn active" onclick="switchTab('hard')">Hard Totals</button>
+    <button class="tab-btn" onclick="switchTab('soft')">Soft Totals</button>
+    <button class="tab-btn" onclick="switchTab('pairs')">Pairs</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-hard">
+    <p class="tab-intro">No Ace counted as 11. This covers ~70% of all hands you'll see.</p>
+    <div class="chart-container" id="hardChart"></div>
+    <div class="tip-box">
+      <div class="tip-title">Hard Totals — Memorize These First</div>
+      <ul class="rule-list">
+        <li><strong>8 or less:</strong> Always hit — you can't bust and any card improves your hand</li>
+        <li><strong>9:</strong> Double vs dealer 3–6, otherwise hit</li>
+        <li><strong>10:</strong> Double vs dealer 2–9, hit vs 10 or Ace</li>
+        <li><strong>11:</strong> Always double — the best doubling hand in blackjack</li>
+        <li><strong>12:</strong> Stand vs dealer 4–6 only, hit everything else (this catches people!)</li>
+        <li><strong>13–16:</strong> Stand vs dealer 2–6 (weak), hit vs 7+ (strong)</li>
+        <li><strong>17+:</strong> Always stand — never hit a hard 17 or higher</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-soft">
+    <p class="tab-intro">You have an Ace counted as 11. These hands are flexible — you can't bust with one more card.</p>
+    <div class="chart-container" id="softChart"></div>
+    <div class="tip-box">
+      <div class="tip-title">Soft Totals — The Flexible Hands</div>
+      <ul class="rule-list">
+        <li><strong>Soft 13–14 (A-2, A-3):</strong> Double vs dealer 5–6 only, otherwise hit</li>
+        <li><strong>Soft 15–16 (A-4, A-5):</strong> Double vs dealer 4–6, otherwise hit</li>
+        <li><strong>Soft 17 (A-6):</strong> Double vs dealer 3–6, otherwise hit — never stand on soft 17!</li>
+        <li><strong>Soft 18 (A-7):</strong> The trickiest hand. Double vs 2–6, stand vs 7–8, hit vs 9–A</li>
+        <li><strong>Soft 19–20:</strong> Always stand — these are strong hands</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-pairs">
+    <p class="tab-intro">Two cards of the same value. Splitting creates two hands, each with its own bet.</p>
+    <div class="chart-container" id="pairChart"></div>
+    <div class="tip-box">
+      <div class="tip-title">Pairs — Split or Don't Split</div>
+      <ul class="rule-list">
+        <li><strong>Always split Aces:</strong> Each Ace + a 10-value card = 21. Two chances to win big</li>
+        <li><strong>Always split 8s:</strong> 16 is the worst hand in blackjack. Two 8s is a fresh start</li>
+        <li><strong>Never split 10s:</strong> You already have 20! Don't ruin a great hand</li>
+        <li><strong>Never split 5s:</strong> You have 10 — double down instead</li>
+        <li><strong>Split 2s, 3s, 6s, 7s:</strong> Only vs dealer 2–6 (weak dealer)</li>
+        <li><strong>9s:</strong> Split vs 2–6 and 8–9. Stand vs 7 (your 18 beats their likely 17), stand vs 10/A</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  STEP 3: PRACTICE TRAINER              -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section" id="practice">
+  <h2 class="section-title">Step 3 — Practice Trainer</h2>
+  <p class="section-subtitle">Drill one category at a time. You make EVERY decision — hit, stand, double, split — just like a real table.</p>
+
+  <div class="practice-filter">
+    <span class="filter-label">Focus on:</span>
+    <button class="filter-btn active" onclick="setPracticeFilter('all')">All Hands</button>
+    <button class="filter-btn" onclick="setPracticeFilter('hard')">Hard Totals</button>
+    <button class="filter-btn" onclick="setPracticeFilter('soft')">Soft Totals</button>
+    <button class="filter-btn" onclick="setPracticeFilter('pairs')">Pairs</button>
+  </div>
+
+  <div class="felt">
+    <div class="hand-area">
+      <div class="hand-label">Dealer</div>
+      <div class="cards-row" id="dealerCards"></div>
+      <div class="hand-total">Total: <span id="dealerTotal">—</span></div>
+    </div>
+
+    <hr class="divider-line">
+
+    <div class="hand-area">
+      <div class="hand-label">Your Hand</div>
+      <div class="cards-row" id="playerCards"></div>
+      <div class="hand-total">Total: <span id="playerTotal">—</span></div>
+    </div>
+
+    <div class="practice-controls" id="practiceActions" style="display:none;">
+      <button class="action-btn btn-hit" onclick="practiceAction('H')">Hit</button>
+      <button class="action-btn btn-stand" onclick="practiceAction('S')">Stand</button>
+      <button class="action-btn btn-double" id="doubleBtn" onclick="practiceAction('D')">Double</button>
+      <button class="action-btn btn-split" id="splitBtn" onclick="practiceAction('P')">Split</button>
+      <button class="action-btn btn-surrender" id="surrenderBtn" onclick="practiceAction('R')">Surrender</button>
+    </div>
+
+    <div style="text-align:center;margin-top:12px;position:relative;z-index:1;">
+      <button class="btn btn-primary" id="dealBtn" onclick="dealPracticeHand()">Deal Hand</button>
+    </div>
+
+    <div class="practice-stats" id="practiceStats"></div>
+  </div>
+
+  <div class="practice-msg" id="practiceMsg"></div>
+
+  <div class="practice-accuracy" id="practiceAccuracy"></div>
+
+  <div style="text-align:center;margin-top:8px;">
+    <button class="btn btn-sm" onclick="resetPracticeStats()">Reset Stats</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  STEP 4: QUIZ                          -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section" id="quiz">
+  <h2 class="section-title">Step 4 — Strategy Quiz</h2>
+  <p class="section-subtitle">Tricky scenarios that catch most beginners. Each question shows the cards visually.</p>
+
+  <div id="quizSetup" class="quiz-setup">
+    <div class="quiz-setup-row">
+      <label>Questions:</label>
+      <input type="number" id="quizCount" min="5" max="30" value="10">
+    </div>
+    <div class="quiz-setup-row">
+      <label>Category:</label>
+      <select id="quizCategory" class="quiz-select">
+        <option value="all">All Types</option>
+        <option value="hard">Hard Totals</option>
+        <option value="soft">Soft Totals</option>
+        <option value="pairs">Pairs</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
+  </div>
+
+  <div id="quizArea" class="quiz-area">
+    <div class="quiz-header">
+      <span id="quizProgress">Question 1 of 10</span>
+      <span id="quizScore">Score: 0/0</span>
+    </div>
+
+    <div class="quiz-cards-display" id="quizCardsDisplay"></div>
+
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-hand-info" id="quizHandInfo"></div>
+    <div class="quiz-btns" id="quizBtns"></div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <div style="text-align:center;">
+      <button class="btn btn-primary" id="quizNextBtn" onclick="nextQuizQuestion()" style="display:none;">Next Question</button>
+    </div>
+  </div>
+
+  <div id="quizResults" class="quiz-results">
+    <div id="quizResultSummary"></div>
+    <h3 style="font-size:1rem;margin:16px 0 10px;">Review Your Answers</h3>
+    <div id="quizReview"></div>
+    <div style="text-align:center;margin-top:16px;">
+      <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  STEP 5: FREE PLAY                     -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section" id="play">
+  <h2 class="section-title">Step 5 — Play Real Hands</h2>
+  <p class="section-subtitle">Full game against the dealer. Toggle the strategy hint to check your thinking.</p>
+
+  <div class="play-controls-bar">
+    <div class="play-bank">
+      Bank: $<span id="playBank">1000</span>
+    </div>
+    <div class="play-bet-area">
+      <label>Bet: $</label>
+      <input type="number" id="playBetInput" min="5" max="500" step="5" value="25">
+    </div>
+    <div class="play-toggle">
+      <label class="toggle-label">
+        <input type="checkbox" id="hintToggle" checked>
+        <span class="toggle-slider"></span>
+        Show Hints
+      </label>
+    </div>
+  </div>
+
+  <div class="felt" id="playFelt">
+    <div class="hand-area">
+      <div class="hand-label">Dealer</div>
+      <div class="cards-row" id="playDealerCards"></div>
+      <div class="hand-total">Total: <span id="playDealerTotal">—</span></div>
+    </div>
+
+    <hr class="divider-line">
+
+    <div class="hand-area">
+      <div class="hand-label">Your Hand</div>
+      <div class="cards-row" id="playPlayerCards"></div>
+      <div class="hand-total">Total: <span id="playPlayerTotal">—</span></div>
+    </div>
+
+    <div class="hint-bar" id="hintBar" style="display:none;">
+      <span class="hint-icon">&#128161;</span>
+      <span id="hintText"></span>
+    </div>
+
+    <div class="practice-controls" id="playActions" style="display:none;">
+      <button class="action-btn btn-hit" onclick="playAction('H')">Hit</button>
+      <button class="action-btn btn-stand" onclick="playAction('S')">Stand</button>
+      <button class="action-btn btn-double" id="playDoubleBtn" onclick="playAction('D')">Double</button>
+      <button class="action-btn btn-split" id="playSplitBtn" onclick="playAction('P')">Split</button>
+      <button class="action-btn btn-surrender" id="playSurrenderBtn" onclick="playAction('R')">Surrender</button>
+    </div>
+
+    <div style="text-align:center;margin-top:12px;position:relative;z-index:1;">
+      <button class="btn btn-primary" id="playDealBtn" onclick="dealPlayHand()">Deal ($<span id="playBetDisplay">25</span>)</button>
+    </div>
+  </div>
+
+  <div class="play-msg" id="playMsg"></div>
+
+  <div class="play-history" id="playHistory">
+    <div class="history-label">Session History</div>
+    <div class="history-entries" id="historyEntries"></div>
+  </div>
+</div>
+
+</main>
+
+<script src="js/strategy-data.js?v=2"></script>
+<script src="js/app.js?v=3"></script>
+</body>
+</html>
