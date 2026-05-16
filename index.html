@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blackjack Basic Strategy — Trainer for Beginners</title>
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 
@@ -170,6 +170,31 @@
   <div class="tip-box" style="margin-bottom:16px;">
     <div class="tip-title">How to Read the Chart</div>
     <p><strong>Row</strong> = your hand total. <strong>Column</strong> = dealer's face-up card. Find your row, find the dealer's column, and the cell tells you what to do. Tap or hover any cell for a description. On small screens, swipe the table sideways to see all dealer cards.</p>
+  </div>
+
+  <div class="mobile-quickref" aria-label="Quick reference for all categories">
+    <div class="tip-box">
+      <div class="tip-title">Hard Totals — Memorize These First</div>
+      <ul class="rule-list">
+        <li><strong>8 or less:</strong> Always hit — you can't bust and any card improves your hand</li>
+        <li><strong>9:</strong> Double vs dealer 3–6, otherwise hit</li>
+        <li><strong>10:</strong> Double vs dealer 2–9, hit vs 10 or Ace</li>
+        <li><strong>11:</strong> Always double — the best doubling hand in blackjack</li>
+        <li><strong>12:</strong> Stand vs dealer 4–6 only, hit everything else (this catches people!)</li>
+        <li><strong>13–16:</strong> Stand vs dealer 2–6 (weak), hit vs 7+ (strong)</li>
+        <li><strong>17+:</strong> Always stand — never hit a hard 17 or higher</li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">Soft Totals — Memorize These First</div>
+      <ul class="rule-list">
+        <li><strong>Soft 13–14 (A-2, A-3):</strong> Double vs dealer 5–6 only, otherwise hit</li>
+        <li><strong>Soft 15–16 (A-4, A-5):</strong> Double vs dealer 4–6, otherwise hit</li>
+        <li><strong>Soft 17 (A-6):</strong> Double vs dealer 3–6, otherwise hit — never stand on soft 17!</li>
+        <li><strong>Soft 18 (A-7):</strong> The trickiest hand. Double vs 2–6, stand vs 7–8, hit vs 9–A</li>
+        <li><strong>Soft 19–20:</strong> Always stand — these are strong hands</li>
+      </ul>
+    </div>
   </div>
 
   <div class="legend" id="legend"></div>
